@@ -1,25 +1,28 @@
 <template>
     <default-field :field="field" :full-width-content="field.fullWidth" :show-help-text="false">
-        <template slot="field" :class="{'border-danger border': hasErrors}">
-            <div :class="{'border-danger border': hasErrors}">
-                <div v-if="field.showToolbar" class="flex border-b-0 border border-40 relative">
+        <template slot="field">
+            <div>
+                <div v-if="field.showToolbar" class="flex relative">
                     <div v-if="preview" class="flex justify-center items-center absolute pin z-10 bg-white">
                         <h3>{{ __('Selected Items') }} ({{ selected.length  }})</h3>
                     </div>
-                    <div @click="selectAll" class="w-16 text-center flex justify-center items-center">
+
+<!--                    <div @click="selectAll" class="w-16 text-center flex justify-center items-center">
                         <fake-checkbox :checked="selectingAll" class="cursor-pointer"></fake-checkbox>
-                    </div>
+                    </div>-->
+
                     <div class="flex-1 flex items-center relative">
-                        <input v-model="search" type="text" :placeholder="__('Search')" class="form-control form-input form-input-bordered w-full ml-0 m-4">
+                        <input v-model="search" type="text" :placeholder="__('Search')" class="w-full form-control form-input form-input-bordered" :class="{'border-danger border': hasErrors}">
                         <span v-if="search" @click="clearSearch" class="pin-r font-sans font-bolder absolute pr-8 cursor-pointer text-black hover:text-80">x</span>
                     </div>
                 </div>
-                <div class="border border-40 relative overflow-auto" :style="{ height: field.height }">
+
+                <div class="relative overflow-auto" :style="{ height: field.height, width: '99%', marginTop: '10px', maxHeight: '134px', minHeight: '44px' }">
                     <div v-if="loading" class="flex justify-center items-center absolute pin z-50 bg-white">
                         <loader class="text-60" />
                     </div>
 
-                    <div v-else v-for="resource in resources" :key="resource.value" @click="toggle($event, resource)" class="flex py-3 cursor-pointer select-none hover:bg-30">
+                    <div v-else v-for="resource in resources" :key="resource.value" @click="toggle($event, resource)" class="flex py-3 cursor-pointer select-none hover:bg-30" :class="{'border-danger border': hasErrors}">
                         <div class="w-16 flex justify-center">
                             <fake-checkbox :checked="selected.includes(resource)" />
                         </div>
@@ -36,6 +39,7 @@
                 <span v-if="field.showCounts" class="pr-2 float-left border-60 whitespace-no-wrap" :class="{ 'border-r mr-2': field.helpText }">
                     {{ selected.length  }} / {{ available.length }}
                 </span>
+
                 <span class="float-left border-60" :class="{'border-r mr-2': field.showPreview }">
                     <help-text class="help-text" v-if="field.helpText"> {{ field.helpText }} </help-text>
                 </span>
@@ -107,6 +111,7 @@ export default {
                 this.selected.push(resource)
             }
         },
+
         selectAll() {
             var selected = this.selected;
 
@@ -156,11 +161,13 @@ export default {
 
             this.selected = selected;
         },
+
         clearSearch() {
             this.displayed = this.selected;
             this.selectingAll = false;
             this.search = null;
         },
+
         checkIfSelectAllIsActive() {
 
             if(this.resources.length === 0 || this.preview) {
@@ -177,6 +184,7 @@ export default {
 
             this.selectingAll = visibleAndSelected.length == this.resources.length;
         },
+
         togglePreview(event){
             this.preview = ! this.preview;
         }
@@ -195,9 +203,11 @@ export default {
 
             return this.displayed;
         },
+
         hasErrors: function() {
             return this.errors.errors.hasOwnProperty(this.field.attribute);
         },
+
         firstError: function() {
             return this.errors.errors[this.field.attribute][0]
         }
