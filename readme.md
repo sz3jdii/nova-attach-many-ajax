@@ -1,7 +1,7 @@
 # Nova Attach Many
 
-[![Latest Version on Github](https://img.shields.io/github/release/dillingham/nova-attach-many.svg?style=flat-square)](https://packagist.org/packages/dillingham/nova-attach-many)
-[![Total Downloads](https://img.shields.io/packagist/dt/dillingham/nova-attach-many.svg?style=flat-square)](https://packagist.org/packages/dillingham/nova-attach-many)
+[![Latest Version on Github](https://img.shields.io/github/release/laravelrotebal/nova-attach-many.svg?style=flat-square)](https://packagist.org/packages/laravelrotebal/nova-attach-many)
+[![Total Downloads](https://img.shields.io/packagist/dt/laravelrotebal/nova-attach-many.svg?style=flat-square)](https://packagist.org/packages/laravelrotebal/nova-attach-many)
 
 Belongs To Many create & edit form UI for Nova. Enables attaching relationships easily and includes validation.
 
@@ -10,7 +10,7 @@ Belongs To Many create & edit form UI for Nova. Enables attaching relationships 
 ### Installation
 
 ```bash
-composer require dillingham/nova-attach-many
+composer require laravelrotebal/nova-attach-many
 ```
 
 ### Usage
@@ -61,11 +61,3 @@ This field also respects policies: ie Role / Permission
 - RolePolicy: attachAnyPermission($user, $role)
 - RolePolicy: attachPermission($user, $role, $permission)
 - PermissionPolicy: viewAny($user)
-
-### TODO
-
-[] Add pagination for large amount of resources
-
-### Thanks
-
-[dkulyk](https://github.com/dkulyk) helped with authorization
