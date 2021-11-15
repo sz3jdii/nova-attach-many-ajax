@@ -1,16 +1,16 @@
 # Nova Attach Many
 
-[![Latest Version on Github](https://img.shields.io/github/release/laravelrotebal/nova-attach-many.svg?style=flat-square)](https://packagist.org/packages/laravelrotebal/nova-attach-many)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravelrotebal/nova-attach-many.svg?style=flat-square)](https://packagist.org/packages/laravelrotebal/nova-attach-many)
+[![Latest Version on Github](https://img.shields.io/github/release/sz3jdii/nova-attach-many-ajax.svg?style=flat-square)](https://packagist.org/packages/sz3jdii/nova-attach-many-ajax)
+[![Total Downloads](https://img.shields.io/packagist/dt/sz3jdii/nova-attach-many-ajax.svg?style=flat-square)](https://packagist.org/packages/sz3jdii/nova-attach-many-ajax)
 
-Belongs To Many create & edit form UI for Nova. Enables attaching relationships easily and includes validation.
+Belongs To Many Ajax create & edit form UI for Nova. Enables attaching relationships easily and includes validation.
 
 ![attach-many](https://user-images.githubusercontent.com/29180903/52160651-be7fd580-2687-11e9-9ece-27332b3ce6bf.png)
 
 ### Installation
 
 ```bash
-composer require laravelrotebal/nova-attach-many
+composer require sz3jdii/nova-attach-many-ajax
 ```
 
 ### Usage

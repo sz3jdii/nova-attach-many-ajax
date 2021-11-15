@@ -27,11 +27,7 @@ class AttachController extends Controller
     {
         $resourceClass = $request->newResource();
 
-        $search = trim($request->query('search'));
-
-        if(empty($search) ) {
-            return;
-        }
+        $search = strtoupper(trim($request->query('search')));
 
         $field = $resourceClass
             ->availableFields($request)
@@ -41,16 +37,24 @@ class AttachController extends Controller
 
         $query = $field->resourceClass::newModel();
 
-        return $field->resourceClass::relatableQuery($request, $query)->get()
-            ->mapInto($field->resourceClass)
-            ->filter(function ($resource) use ($request, $field, $search) {
-                return $request->newResource()->authorizedToAttach($request, $resource->resource) && false !== mb_stripos($resource->title(), $search);
-            })->map(function($resource) {
-                return [
-                    'display' => $resource->title(),
-                    'value' => $resource->getKey(),
-                ];
-            })->sortBy('display')->slice(0, 10)->values();
+        if(!empty($search)){
+            $query = $field->resourceClass::relatableQuery($request, $query)
+                ->whereRaw("UPPER(name) LIKE '%".$search."%'")
+                ->orWhereRaw("UPPER(first_name) LIKE '%".$search."%'")
+                ->orWhereRaw("UPPER(last_name) LIKE '%".$search."%'")
+                ->orWhereRaw("UPPER(email) LIKE '%".$search."%'")
+                ->get()
+                ->mapInto($field->resourceClass)
+                ->map(function($resource) {
+                    return [
+                        'display' => $resource->title(),
+                        'value' => $resource->getKey(),
+                    ];
+                })->sortBy('display')->slice(0, 10)->values();
+        }else{
+            return;
+        }
+        return $query;
     }
 
     public function getSelectedResources(NovaRequest $request, $relationship)

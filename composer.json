@@ -1,6 +1,6 @@
 {
-    "name": "laravelrotebal/nova-attach-many",
-    "description": "Attach Many Nova field",
+    "name": "sz3jdii/nova-attach-many-ajax",
+    "description": "Attach Many Nova AJAX field",
     "keywords": [
         "laravel",
         "nova"
