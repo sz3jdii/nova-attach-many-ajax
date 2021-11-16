@@ -27,7 +27,7 @@ class AttachController extends Controller
     {
         $resourceClass = $request->newResource();
 
-        $search = strtoupper(trim($request->query('search')));
+        $searchInput = strtoupper(trim($request->query('search')));
 
         $field = $resourceClass
             ->availableFields($request)
@@ -37,20 +37,32 @@ class AttachController extends Controller
 
         $query = $field->resourceClass::newModel();
 
-        if(!empty($search)){
-            $query = $field->resourceClass::relatableQuery($request, $query)
-                ->whereRaw("UPPER(name) LIKE '%".$search."%'")
-                ->orWhereRaw("UPPER(first_name) LIKE '%".$search."%'")
-                ->orWhereRaw("UPPER(last_name) LIKE '%".$search."%'")
-                ->orWhereRaw("UPPER(email) LIKE '%".$search."%'")
-                ->get()
+        if(!empty($searchInput)){
+            $searchByFields = $field->resourceClass::$search ?? [];
+
+            $query = !empty($field->defaultQuery) ? $field->defaultQuery : $field->resourceClass::relatableQuery($request, $query);
+            if(!empty($searchByFields)){
+                $query = $query->where(function ($q) use ($searchByFields, $searchInput){
+                    foreach($searchByFields as $key => $searchByField){
+                        $rawExpression = "UPPER(".$searchByField."::text) LIKE '%".$searchInput."%'";
+                        if($key == 0){
+                            $q = $q->whereRaw($rawExpression);
+                        }else{
+                            $q = $q->orWhereRaw($rawExpression);
+                        }
+                    }
+                });
+
+            }
+
+            $query = $query->get()
                 ->mapInto($field->resourceClass)
                 ->map(function($resource) {
                     return [
                         'display' => $resource->title(),
                         'value' => $resource->getKey(),
                     ];
-                })->sortBy('display')->slice(0, 10)->values();
+                })->sortBy('display')->values();
         }else{
             return;
         }

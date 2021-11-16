@@ -29,7 +29,7 @@ class AttachMany extends Field
 
     public $component = 'nova-attach-many';
 
-    public function __construct($name, $attribute = null, $resource = null)
+    public function __construct($name, $attribute = null, $resource = null, $defaultQuery = null)
     {
         parent::__construct($name, $attribute);
 
@@ -38,6 +38,7 @@ class AttachMany extends Field
         $this->resource = $resource;
 
         $this->resourceClass = $resource;
+        $this->defaultQuery = $defaultQuery;
         $this->resourceName = $resource::uriKey();
         $this->manyToManyRelationship = $this->attribute;
 
