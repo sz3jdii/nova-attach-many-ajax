@@ -27,7 +27,7 @@ class AttachController extends Controller
     {
         $resourceClass = $request->newResource();
 
-        $searchInput = strtoupper(trim($request->query('search')));
+        $searchInput = mb_convert_case(trim($request->query('search')), MB_CASE_UPPER, 'UTF-8');
 
         $field = $resourceClass
             ->availableFields($request)
